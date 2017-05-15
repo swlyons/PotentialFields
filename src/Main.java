@@ -9,6 +9,7 @@ public class Main {
 
         String hostName = "This is the hotname";
         int portNumber = 4444;
+        List<PotentialField> fields = new ArrayList<PotentialField>();
 
         try {
             Socket theSocket = new Socket(hostName, portNumber);

@@ -20,15 +20,15 @@ public class Main {
             String fromUser;
 
             while ((fromServer = in.readLine()) != null) {
-                System.out.println("Server: " + fromServer);
+//                System.out.println("Server: " + fromServer);
                 if (fromServer.equals("Bye."))
                     break;
 
                 fromUser = stdIn.readLine();
-                if (fromUser != null) {
-                    System.out.println("Client: " + fromUser);
-                    out.println(fromUser);
-                }
+//                if (fromUser != null) {
+//                    System.out.println("Client: " + fromUser);
+                out.println(fromUser);
+//                }
             }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);

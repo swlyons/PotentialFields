@@ -7,8 +7,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String hostName = "This is the hotname";
-        int portNumber = 4444;
+        String hostName = "localhost";
+        int portNumber = 55555;
         List<PotentialField> fields = new ArrayList<PotentialField>();
 
         try {

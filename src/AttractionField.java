@@ -10,12 +10,12 @@ public class AttractionField implements PotentialField {
     private double s;
     private double alpha;
 
-    public AttractionField(double x, double y, double r, double attraction) {
+    public AttractionField(double x, double y, double r, double attractionStrength, double spread) {
         this.x = x;
         this.y = y;
         this.r = r * r;
-        s = 10;
-        alpha = attraction;
+        s = spread;
+        alpha = attractionStrength;
     }
 
     @Override

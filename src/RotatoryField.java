@@ -10,11 +10,11 @@ public class RotatoryField implements PotentialField {
     private double s;
     private double alpha;
 
-    public RotatoryField(double x, double y, double r, double rotationalStrength) {
+    public RotatoryField(double x, double y, double r, double rotationalStrength, double spread) {
         this.x = x;
         this.y = y;
         this.r = r * r;
-        s = 10;
+        s = spread;
         alpha = rotationalStrength;
     }
 

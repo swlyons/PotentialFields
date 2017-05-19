@@ -10,12 +10,12 @@ public class RepulsionField implements PotentialField {
     private double s;
     private double alpha;
 
-    public RepulsionField(double x, double y, double r, double repulsion) {
+    public RepulsionField(double x, double y, double r, double repulsionStrength, double spread) {
         this.x = x;
         this.y = y;
         this.r = r * r;
-        s = 10;
-        alpha = repulsion;
+        s = spread;
+        alpha = repulsionStrength;
     }
 
     @Override

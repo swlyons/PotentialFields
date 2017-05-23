@@ -33,12 +33,12 @@ public class Communicator {
         return "broken connection";
     }
 
-    public Object getFields(){
+    public FieldLocations getFields(){
         String results = sendMessage("where others");
         return parseFieldLocations(results);
     }
 
-    public Object getRobotPosition(){
+    public Location getRobotPosition(){
         String results = sendMessage("where robot");
         return new Gson().fromJson(results, Location.class);
     }
@@ -53,7 +53,7 @@ public class Communicator {
         Set<Map.Entry<String, JsonElement>> entries = o.entrySet();
         int time = 0;
 
-        Map<Integer, Location> locations = new TreeMap<>();
+        Map<Integer, Location> locations = new TreeMap<Integer, Location>();
         for(Map.Entry<String, JsonElement> entry : entries) {
             if (entry.getKey().equals("time")) {
                 time = entry.getValue().getAsInt();

@@ -13,7 +13,7 @@ public class RepulsionField implements PotentialField {
     public RepulsionField(double x, double y, double r, double repulsionStrength, double spread) {
         this.x = x;
         this.y = y;
-        this.r = r * r;
+        this.r = r;
         s = spread;
         alpha = repulsionStrength;
     }
@@ -21,19 +21,22 @@ public class RepulsionField implements PotentialField {
     @Override
     public Vector getAttractionVector(double x, double y) {
         Vector v;
-        double d = Math.sqrt((this.x - x) * (this.x - x) + (this.y - y) * (this.x - x));
+        double d = Math.sqrt((this.x - x) * (this.x - x) + (this.y - y) * (this.y - y));
         double theta = Math.atan2(this.y - y, this.x - x);
 
         if (d < r) {
             //it's inside     possibly replace alpha with -infinity?
-            v = new Vector(alpha * Math.cos(theta), alpha * Math.sin(theta));
+            v = new Vector(-alpha * Math.cos(theta), -alpha * Math.sin(theta));
+            System.out.println("Yoz"+-alpha * Math.cos(theta));
         } else {
             if (d < s + r) {
                 //it's far away α(d − r) cos(θ)
                 v = new Vector(0, 0);
+                System.out.println("Yoa"+-0);
             } else {
                 //it's between
                 v = new Vector(-alpha * (s + r - d) * Math.cos(theta), -alpha * (s + r - d) * Math.sin(theta));
+                System.out.println("Yo"+-alpha * (s + r - d) * Math.cos(theta));
             }
         }
 

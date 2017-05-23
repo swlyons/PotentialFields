@@ -26,10 +26,10 @@ public class Robot {
             this.right = right;
         }
     }
-    double xPosition;
-    double yPosition;
+    public double xPosition;
+    public double yPosition;
     //TODO: change angle to a vector from a double
-    double angle;
+    public double angle;
 
     public Robot(double xPosition, double yPosition, double angle) {
         this.xPosition = xPosition;

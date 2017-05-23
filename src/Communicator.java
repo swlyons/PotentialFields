@@ -33,14 +33,26 @@ public class Communicator {
         return "broken connection";
     }
 
-    public FieldLocations getFields(){
+    public FieldLocations getFields() throws Exception{
+        Thread.sleep(10);
         String results = sendMessage("where others");
+        while(!results.contains("center")){
+            Thread.sleep(10);
+            results = sendMessage("where others");
+        }
+//        System.out.println(results);
         return parseFieldLocations(results);
     }
 
-    public Location getRobotPosition(){
+    public Location getRobotPosition() throws Exception{
+        Thread.sleep(10);
         String results = sendMessage("where robot");
-        return new Gson().fromJson(results, Location.class);
+        while(!results.contains("center")){
+            Thread.sleep(10);
+            results = sendMessage("where robot");
+        }
+//        System.out.println(results);
+        return new  Gson().fromJson(results, Location.class);
     }
 
     public void sendMoveInstruction(Robot.MoveCommand command) {

@@ -23,4 +23,8 @@ public class Vector {
         return y;
     }
 
+    public double getMagnitude(){
+        return Math.sqrt(x*x + y*y);
+    }
+
 }

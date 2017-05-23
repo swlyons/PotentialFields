@@ -13,7 +13,7 @@ public class AttractionField implements PotentialField {
     public AttractionField(double x, double y, double r, double attractionStrength, double spread) {
         this.x = x;
         this.y = y;
-        this.r = r * r;
+        this.r = r;
         s = spread;
         alpha = attractionStrength;
     }
@@ -21,9 +21,9 @@ public class AttractionField implements PotentialField {
     @Override
     public Vector getAttractionVector(double x, double y) {
         Vector v;
-        double d = Math.sqrt((this.x - x) * (this.x - x) + (this.y - y) * (this.x - x));
+        double d = Math.sqrt((this.x - x) * (this.x - x) + (this.y - y) * (this.y - y));
         double theta = Math.atan2(this.y - y, this.x - x);
-
+        System.out.println((this.x - x) * (this.x - x) );
         if (d < r) {
             //it's inside
             v = new Vector(0, 0);

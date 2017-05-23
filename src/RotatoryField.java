@@ -21,7 +21,7 @@ public class RotatoryField implements PotentialField {
     @Override
     public Vector getAttractionVector(double x, double y) {
         Vector v;
-        double d = Math.sqrt((this.x - x) * (this.x - x) + (this.y - y) * (this.x - x));
+        double d = Math.sqrt((this.x - x) * (this.x - x) + (this.y - y) * (this.y - y));
         double theta = Math.atan2(this.y - y, this.x - x) + Math.PI / 2;
         if (theta > Math.PI) {
             theta -= Math.PI;

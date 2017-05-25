@@ -10,45 +10,53 @@ public class Main {
         String hostName = "localhost";
         int portNumber = 55555;
         List<PotentialField> fields = new ArrayList<PotentialField>();
-        System.out.println("A");
+        List<PotentialField> fieldscan = new ArrayList<PotentialField>();
         try {
             Communicator c = new Communicator(hostName, portNumber);
-//            c.sendMessage("where others");
-//            c.sendMessage("speed 0 0");
-//            while(true){
-//                if(1==2)
-//                break;
-//            }
-            System.out.println("B");
+            System.out.println(c.sendMessage("where others"));
+            System.out.println(c.sendMessage("param kp 30"));
+            System.out.println(c.sendMessage("param ki 0.2"));
+
             FieldLocations f = c.getFields();
             for(Map.Entry<Integer, Location> entry: f.getFields().entrySet()){
+//                if(entry.getKey()!=5){
+//                    fields.add(new RepulsionField(entry.getValue().getCenter().get(0), entry.getValue().getCenter().get(1), 50, 0.5, 100));
+//                    fieldscan.add(new AttractionField(entry.getValue().getCenter().get(0), entry.getValue().getCenter().get(1), 50, 10, 100));
+//                }
                 if(entry.getKey()==21){
-                    fields.add(new AttractionField(entry.getValue().getCenter().get(0), entry.getValue().getCenter().get(1), 200, 10, 1000));
+                    fields.add(new AttractionField(entry.getValue().getCenter().get(0), entry.getValue().getCenter().get(1), 100, 10, 350));
                 }
                 if(entry.getKey()==20){
-                    fields.add(new RepulsionField(entry.getValue().getCenter().get(0), entry.getValue().getCenter().get(1), 200, 10, 10000));
+                    fields.add(new RepulsionField(entry.getValue().getCenter().get(0), entry.getValue().getCenter().get(1), 50, 0.5, 200));
                 }
             }
-            System.out.println("C");
+            fields.add(new RandomField(3));
+
+
             Location robotLoc = c.getRobotPosition();
             while (robotLoc.getCenter() == null){
                 System.out.println("Why?");
                 robotLoc = c.getRobotPosition();
             }
-            System.out.println("D");
             Robot robot = new Robot(robotLoc.getX(), robotLoc.getY(), robotLoc.getAngle());
 
-            System.out.println("E");
             Vector finalVector = new Vector(10,10);
 
             String s;
 
             boolean clock = true;
 
-            System.out.println("F");
-            while(finalVector.getMagnitude() > 1) {
+
+//            int index = 0;
+
+//            while (index<fields.size()-1){
+//                fields.add(index, fieldscan.get(index));
+//                PotentialField tempField = fields.remove(index+1);
+
+                while(finalVector.getMagnitude() > 1) {
+//                    If the speed is 0, just move to the next goal since the robot's not going to move
+
                 clock = !clock;
-                System.out.println("Z");
                 finalVector = new Vector(0, 0);
                 robotLoc = c.getRobotPosition();
                 while (robotLoc.getCenter() == null){
@@ -56,33 +64,14 @@ public class Main {
                     robotLoc = c.getRobotPosition();
                 }
                 robot = new Robot(robotLoc.getX(), robotLoc.getY(), robotLoc.getAngle());
+//                if(Math.abs(robotLoc.getX()-fields.get(index).getX())<100&&Math.abs(robotLoc.getY()-fields.get(index).getY())<100){
+//                    System.out.println("GOOOOAAALLL!");
+//                    break;
+//                }
                 for (PotentialField field : fields) {
                     finalVector.addVector(field.getAttractionVector(robot.xPosition, robot.yPosition));
                 }
-                System.out.println("G");
 
-//                while (Math.abs(robotLoc.getAngle() - Math.atan2(finalVector.getY(), finalVector.getX())) > 1) {
-//                    s = c.sendMessage("speed 3 -3");
-//                    robotLoc = c.getRobotPosition();
-//                    while (robotLoc.getCenter() == null){
-//                        System.out.println("Why?");
-//                        robotLoc = c.getRobotPosition();
-//                    }
-//                    Thread.sleep(5);
-//                }
-//                Thread.sleep(1000);
-
-
-
-                System.out.println(robotLoc.getAngle());
-                System.out.println(Math.atan2(finalVector.getY(), finalVector.getX()));
-
-//                c.sendMessage("where others");
-//                c.sendMessage("speed 0 0");
-//                while(true){
-//                    if(1==2)
-//                    break;
-//                }
 
                 double robotangle = robotLoc.getAngle()*-1;
                 if(robotangle<0){
@@ -102,7 +91,16 @@ public class Main {
                 if(vectorangle<Math.PI){
                     System.out.println("AngleA "+Math.abs(robotLoc.getAngle() - Math.atan2(finalVector.getY(), finalVector.getX())));
                     while (Math.abs(robotLoc.getAngle() - Math.atan2(finalVector.getY(), finalVector.getX())) > 0.3) {
-                        s = c.sendMessage("speed -2 2");
+//                        if(Math.abs(robotLoc.getX()-fields.get(index).getX())<100&&Math.abs(robotLoc.getY()-fields.get(index).getY())<100){
+//                            System.out.println("GOOOOAAALLL!");
+//                            break;
+//                        }
+
+                        int speed = (int) finalVector.getMagnitude();
+                        if(speed>10){
+                            speed=10;
+                        }
+                        s = c.sendMessage("speed "+(speed-8)+" "+speed);
                         robotLoc = c.getRobotPosition();
                         while (robotLoc.getCenter() == null) {
                             System.out.println("Why?");
@@ -110,12 +108,12 @@ public class Main {
                         }
                         Thread.sleep(5);
                     }
-                    s = c.sendMessage("speed 0 0");
-                    s = c.sendMessage("speed 0 0");
-                    s = c.sendMessage("speed 0 0");
-                    s = c.sendMessage("speed 0 0");
-                    s = c.sendMessage("speed 0 0");
-                    Thread.sleep(500);
+//                    s = c.sendMessage("speed 0 0");
+//                    s = c.sendMessage("speed 0 0");
+//                    s = c.sendMessage("speed 0 0");
+//                    s = c.sendMessage("speed 0 0");
+//                    s = c.sendMessage("speed 0 0");
+                    Thread.sleep(5);
                     while (robotLoc.getCenter() == null) {
                         System.out.println("Why?");
                         robotLoc = c.getRobotPosition();
@@ -123,7 +121,16 @@ public class Main {
                 }else{
                     System.out.println("AngleB "+Math.abs(robotLoc.getAngle() - Math.atan2(finalVector.getY(), finalVector.getX())));
                     while (Math.abs(robotLoc.getAngle() - Math.atan2(finalVector.getY(), finalVector.getX())) > 0.3) {
-                        s = c.sendMessage("speed 2 -2");
+//                        if(Math.abs(robotLoc.getX()-fields.get(index).getX())<100&&Math.abs(robotLoc.getY()-fields.get(index).getY())<100){
+//                            System.out.println("GOOOOAAALLL!");
+//                            break;
+//                        }
+
+                        int speed = (int) finalVector.getMagnitude();
+                        if(speed>10){
+                            speed=10;
+                        }
+                        s = c.sendMessage("speed "+speed+" "+(speed-8));
                         robotLoc = c.getRobotPosition();
                         while (robotLoc.getCenter() == null) {
                             System.out.println("Why?");
@@ -131,31 +138,45 @@ public class Main {
                         }
                         Thread.sleep(5);
                     }
-                    s = c.sendMessage("speed 0 0");
-                    s = c.sendMessage("speed 0 0");
-                    s = c.sendMessage("speed 0 0");
-                    s = c.sendMessage("speed 0 0");
-                    s = c.sendMessage("speed 0 0");
-                    Thread.sleep(500);
+                    Thread.sleep(5);
                     while (robotLoc.getCenter() == null) {
                         System.out.println("Why?");
                         robotLoc = c.getRobotPosition();
                     }
                 }
 
+//                    if(Math.abs(robotLoc.getX()-fields.get(index).getX())<100&&Math.abs(robotLoc.getY()-fields.get(index).getY())<100){
+//                        System.out.println("GOOOOAAALLL!");
+//                        break;
+//                    }
+
+
 //                int speed = 2;
 //                int speed = (int) finalVector.getMagnitude()/3+1;
                 int speed = (int) finalVector.getMagnitude();
-//                System.out.println("speed "+speed);
+                if(speed>10){
+                    speed=10;
+                }
                 s = c.sendMessage("speed "+speed+" "+speed);
                 s = c.sendMessage("speed "+speed+" "+speed);
                 s = c.sendMessage("speed "+speed+" "+speed);
-                Thread.sleep(500);
+                Thread.sleep(5);
             }
+//                fields.remove(index);
+//                fields.add(index,tempField);
+//                index++;
+//                finalVector = new Vector(0, 0);
+//                for (PotentialField field : fields) {
+//                    finalVector.addVector(field.getAttractionVector(robot.xPosition, robot.yPosition));
+//                }
+
+//            }
+
             s = c.sendMessage("speed 0 0");
             s = c.sendMessage("speed 0 0");
             s = c.sendMessage("speed 0 0");
 
+            c.sendMessage("speed 0 0");
             System.out.println("DONE!");
         } catch (Exception e) {
             System.out.println(e);
@@ -163,34 +184,6 @@ public class Main {
         }
 
 
-//        try {
-//            Socket theSocket = new Socket(hostName, portNumber);
-//            PrintWriter out = new PrintWriter(theSocket.getOutputStream(), true);
-//            BufferedReader in = new BufferedReader(new InputStreamReader(theSocket.getInputStream()));
-//
-//            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-//            String fromServer;
-//            String fromUser;
-//
-//            while ((fromServer = in.readLine()) != null) {
-////                System.out.println("Server: " + fromServer);
-//                if (fromServer.equals("Bye."))
-//                    break;
-//
-//                fromUser = stdIn.readLine();
-////                if (fromUser != null) {
-////                    System.out.println("Client: " + fromUser);
-//                out.println(fromUser);
-////                }
-//            }
-//        } catch (UnknownHostException e) {
-//            System.err.println("Don't know about host " + hostName);
-//            System.exit(1);
-//        } catch (IOException e) {
-//            System.err.println("Couldn't get I/O for the connection to " +
-//                    hostName);
-//            System.exit(1);
-//        }
     }
 }
 

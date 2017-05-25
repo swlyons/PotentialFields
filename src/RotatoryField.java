@@ -32,7 +32,7 @@ public class RotatoryField implements PotentialField {
             //it's inside     possibly replace alpha with -infinity?
             v = new Vector(alpha * Math.cos(theta), alpha * Math.sin(theta));
         } else {
-            if (d < s + r) {
+            if (d > s + r) {
                 //it's far away α(d − r) cos(θ)
                 v = new Vector(0, 0);
             } else {
@@ -43,4 +43,7 @@ public class RotatoryField implements PotentialField {
 
         return v;
     }
+    public double getX(){return x;}
+    public double getY(){return y;}
+
 }

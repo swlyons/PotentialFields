@@ -24,22 +24,28 @@ public class RepulsionField implements PotentialField {
         double d = Math.sqrt((this.x - x) * (this.x - x) + (this.y - y) * (this.y - y));
         double theta = Math.atan2(this.y - y, this.x - x);
 
+
         if (d < r) {
             //it's inside     possibly replace alpha with -infinity?
-            v = new Vector(-alpha * Math.cos(theta), -alpha * Math.sin(theta));
-            System.out.println("Yoz"+-alpha * Math.cos(theta));
+            v = new Vector(-10, -10);
+//            System.out.println("Yoz"+-alpha * Math.cos(theta));
         } else {
-            if (d < s + r) {
+            if (d > s + r) {
                 //it's far away α(d − r) cos(θ)
                 v = new Vector(0, 0);
-                System.out.println("Yoa"+-0);
+//                System.out.println("Yoa"+-0);
             } else {
                 //it's between
                 v = new Vector(-alpha * (s + r - d) * Math.cos(theta), -alpha * (s + r - d) * Math.sin(theta));
-                System.out.println("Yo"+-alpha * (s + r - d) * Math.cos(theta));
+                System.out.println(v.getX());
+                System.out.println(v.getY());
+                //                System.out.println("Yo"+-alpha * (s + r - d) * Math.cos(theta));
             }
         }
 
         return v;
     }
+    public double getX(){return x;}
+    public double getY(){return y;}
+
 }

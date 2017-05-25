@@ -3,4 +3,6 @@
  */
 public interface PotentialField {
     public Vector getAttractionVector(double x, double y);
+    public double getX();
+    public double getY();
 }

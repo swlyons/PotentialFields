@@ -28,7 +28,7 @@ public class AttractionField implements PotentialField {
             //it's inside
             v = new Vector(0, 0);
         } else {
-            if (d < s + r) {
+            if (d > s + r) {
                 //it's far away α(d − r) cos(θ)
                 v = new Vector(alpha * Math.cos(theta), alpha * Math.sin(theta));
             } else {
@@ -39,4 +39,6 @@ public class AttractionField implements PotentialField {
 
         return v;
     }
+    public double getX(){return x;}
+    public double getY(){return y;}
 }

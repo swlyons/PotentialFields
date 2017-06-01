@@ -21,7 +21,7 @@ public class AttractionField implements PotentialField {
     public AttractionField(double x, double y) {
         this.x = x;
         this.y = y;
-        this.r = r;
+//        this.r = r;
         s = 0;
         alpha = 0;
     }

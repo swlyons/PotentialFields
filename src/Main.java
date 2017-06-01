@@ -7,6 +7,10 @@ public class Main {
 
     public static void main(String[] args) {
 
+        RRTcommand rrTcommand = new RRTcommand();
+
+//        rrTcommand.goToGoalRRT(74);
+
         String hostName = "localhost";
         int portNumber = 55555;
         List<PotentialField> fields = new ArrayList<PotentialField>();

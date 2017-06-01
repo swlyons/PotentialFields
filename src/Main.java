@@ -13,19 +13,19 @@ public class Main {
 
         String hostName = "192.168.2.29";
         int portNumber = 55555;
-        List<PotentialField> fields = new ArrayList<PotentialField>();
+        List<PotentialField> fields = rrTcommand.goToGoalRRT(74);
         List<PotentialField> fieldscan = new ArrayList<PotentialField>();
         try {
             Communicator c = new Communicator(hostName, portNumber);
             System.out.println(c.sendMessage("where others"));
             System.out.println(c.sendMessage("param kp 30"));
             System.out.println(c.sendMessage("param ki 0.2"));
-            Location target = c.getFields().getFields().get(74);
-            fields.add(new AttractionField(target.getCenter().get(0), target.getCenter().get(1)));
-            target = c.getFields().getFields().get(85);
-            fields.add(new AttractionField(target.getCenter().get(0), target.getCenter().get(1)));
+//            Location target = c.getFields().getFields().get(74);
+//            fields.add(new AttractionField(target.getCenter().get(0), target.getCenter().get(1)));
+//            target = c.getFields().getFields().get(85);
+//            fields.add(new AttractionField(target.getCenter().get(0), target.getCenter().get(1)));
             PathTransversal traverser = new PathTransversal(c);
-            traverser.transversePath(fields);
+//            traverser.transversePath(fields);
             return;
 
 //            FieldLocations f = c.getFields();

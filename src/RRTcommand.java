@@ -13,7 +13,7 @@ public class RRTcommand {
         int goalX = -1;
         int goalY = -1;
         Random r = new Random((int) (new Date()).getTime());
-        String hostName = "localhost";
+        String hostName = "192.168.2.29";
         int portNumber = 55555;
         List<int[]> rrtree = new ArrayList<int[]>();
 

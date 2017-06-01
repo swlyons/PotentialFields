@@ -18,6 +18,14 @@ public class AttractionField implements PotentialField {
         alpha = attractionStrength;
     }
 
+    public AttractionField(double x, double y) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        s = 0;
+        alpha = 0;
+    }
+
     @Override
     public Vector getAttractionVector(double x, double y) {
         Vector v;

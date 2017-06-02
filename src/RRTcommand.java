@@ -10,7 +10,7 @@ public class RRTcommand {
 
     public List<PotentialField> goToGoalRRT(int goal) {
         System.out.println("START");
-        int obstacleSize= 130;
+        int obstacleSize= 35;
         int deltaQ = 70;
         int goalX = -1;
         int goalY = -1;

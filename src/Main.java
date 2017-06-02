@@ -5,6 +5,20 @@ import java.net.Socket;
 
 public class Main {
 
+    private static void goAStar(Communicator c) throws Exception {
+        FieldLocations locations = c.getFields();
+        Location destinationField = locations.getFields().get(74);
+        locations.getFields().remove(74);
+        Graph graph = new Graph(locations, 800,1600,25);
+        List<Node> nodes = graph.getGraph();
+        Location robotLocation = c.getRobotPosition();
+        Node robot = graph.getClosest((int)robotLocation.getX(), (int)robotLocation.getY(), nodes);
+        Node destination = graph.getClosest((int)destinationField.getX(), (int)destinationField.getY(), nodes);
+        List<PotentialField> fields = new AStar().traverse(robot, destination);
+        PathTransversal traverser = new PathTransversal(c);
+        traverser.transversePath(fields);
+        return;
+    }
     public static void main(String[] args) {
 
         RRTcommand rrTcommand = new RRTcommand();
@@ -14,18 +28,20 @@ public class Main {
         String hostName = "192.168.2.29";
         int portNumber = 55555;
         List<PotentialField> fields = rrTcommand.goToGoalRRT(74);
+//        System.out.println(fields.size());
         List<PotentialField> fieldscan = new ArrayList<PotentialField>();
         try {
             Communicator c = new Communicator(hostName, portNumber);
-            System.out.println(c.sendMessage("where others"));
-            System.out.println(c.sendMessage("param kp 30"));
-            System.out.println(c.sendMessage("param ki 0.2"));
+//            System.out.println(c.sendMessage("where others"));
+//            System.out.println(c.sendMessage("param kp 30"));
+//            System.out.println(c.sendMessage("param ki 0.2"));
+//            goAStar(c);
 //            Location target = c.getFields().getFields().get(74);
 //            fields.add(new AttractionField(target.getCenter().get(0), target.getCenter().get(1)));
 //            target = c.getFields().getFields().get(85);
 //            fields.add(new AttractionField(target.getCenter().get(0), target.getCenter().get(1)));
             PathTransversal traverser = new PathTransversal(c);
-//            traverser.transversePath(fields);
+            traverser.transversePath(fields);
             return;
 
 //            FieldLocations f = c.getFields();

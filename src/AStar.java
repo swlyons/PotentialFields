@@ -63,7 +63,7 @@ public class AStar {
             }
         }
         System.out.println("FAIL");
-        return new ArrayList<>();
+        return new ArrayList<PotentialField>();
     }
 
     private int h(Node node, Node goal) {
@@ -73,7 +73,7 @@ public class AStar {
     }
 
     private List<PotentialField> getPath(Node node){
-        ArrayList<PotentialField> fields = new ArrayList<>();
+        ArrayList<PotentialField> fields = new ArrayList<PotentialField>();
         fields.add(0,new AttractionField(node.getX(), node.getY()));
         while (node.getParent() != null) {
             node = node.getParent();

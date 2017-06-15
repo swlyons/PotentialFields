@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+
 import java.net.UnknownHostException;
 import java.util.*;
 import java.io.*;
@@ -20,18 +22,61 @@ public class Main {
         return;
     }
     public static void main(String[] args) {
-
-        RRTcommand rrTcommand = new RRTcommand();
+          System.out.println("Start");
+//        RRTcommand rrTcommand = new RRTcommand();
 
 //        rrTcommand.goToGoalRRT(74);
 
         String hostName = "192.168.2.29";
         int portNumber = 55555;
-        List<PotentialField> fields = rrTcommand.goToGoalRRT(74);
-//        System.out.println(fields.size());
-        List<PotentialField> fieldscan = new ArrayList<PotentialField>();
+//        List<PotentialField> fields = rrTcommand.goToGoalRRT(74);
+//        System.out.println(fields.size());  27
+//        List<PotentialField> fieldscan = new ArrayList<PotentialField>();
         try {
+
             Communicator c = new Communicator(hostName, portNumber);
+            int maxspeed=5;
+            RandomRunner r = new RandomRunner(maxspeed, 5000, 100, "trials/trial"+(new Date()).getTime()+".json", c);
+            r.run();
+
+
+
+            int goalX=0;
+            int goalY=0;
+            FieldLocations f = c.getFields();
+            for (Map.Entry<Integer, Location> entry : f.getFields().entrySet()) {
+                if (entry.getKey() == 27) {
+                    goalX = (int) entry.getValue().getX();
+                    goalY = (int) entry.getValue().getY();
+                break;
+                }
+            }
+
+            Location robotLoc = c.getRobotPosition();
+            TrialData t = new TrialData(robotLoc, goalX, goalY, 0, 0);
+            String result = new Gson().toJson(t);
+
+            String hostName2="";
+            int portNumber2=0;
+
+            Communicator c2 = new Communicator(hostName2, portNumber2);
+            String whereToGo = c2.sendMessage(result);
+            Gson gson = new Gson();
+            TrialData trialWhatToDo = gson.fromJson(whereToGo, TrialData.class);
+            int leftPower=maxspeed;
+            int rightPower=maxspeed;
+            if(trialWhatToDo.getTurn()<0){
+                leftPower = maxspeed + trialWhatToDo.getTurn();
+            }else{
+                rightPower = maxspeed - trialWhatToDo.getTurn();
+            }
+            c.sendMessage(String.format("speed %1$s %2$s", leftPower, rightPower));
+            Thread.sleep(trialWhatToDo.getTime());
+            c.sendMessage("speed 0 0");
+//                public TrialData(Location robotLoc, double destX, double destY, int leftPower, int rightPower, int time) {
+
+
+
 //            System.out.println(c.sendMessage("where others"));
 //            System.out.println(c.sendMessage("param kp 30"));
 //            System.out.println(c.sendMessage("param ki 0.2"));
@@ -40,8 +85,8 @@ public class Main {
 //            fields.add(new AttractionField(target.getCenter().get(0), target.getCenter().get(1)));
 //            target = c.getFields().getFields().get(85);
 //            fields.add(new AttractionField(target.getCenter().get(0), target.getCenter().get(1)));
-            PathTransversal traverser = new PathTransversal(c);
-            traverser.transversePath(fields);
+//            PathTransversal traverser = new PathTransversal(c);
+//            traverser.transversePath(fields);
             return;
 
 //            FieldLocations f = c.getFields();

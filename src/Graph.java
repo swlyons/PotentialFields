@@ -17,8 +17,8 @@ public class Graph {
         this.height = height;
         this.width = width;
         this.distanceBetweenNodes = distanceBetweenNodes;
-        obstacleX = new ArrayList<>();
-        obstacleY = new ArrayList<>();
+        obstacleX = new ArrayList<Integer>();
+        obstacleY = new ArrayList<Integer>();
         for(Location obstacle : obstacles.getFields().values()){
             obstacleX.add((int)obstacle.getX());
             obstacleY.add((int)obstacle.getY());
@@ -53,7 +53,7 @@ public class Graph {
                 }
             }
         }
-        ArrayList<Node> result = new ArrayList<>();
+        ArrayList<Node> result = new ArrayList<Node>();
         for(int x = 0; x < xcount; x++) {
             for (int y = 0; y < ycount; y++) {
                 Node node = nodes[x][y];

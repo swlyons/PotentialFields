@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -24,17 +25,24 @@ public class RandomRunner {
     }
 
     public void run() throws InterruptedException {
-        ArrayList<TrialData> trials = new ArrayList<>();
-        Random random = new Random();
+        ArrayList<TrialData> trials = new ArrayList<TrialData>();
+        Random random = new Random((int) (new Date()).getTime());
         for (int i = 0; i < iterations; i++ ){
             goToCenter();
             Location original = getLocation();
             int leftPower = random.nextInt(maxSpeed + 1);
+            if(random.nextBoolean()){
+                leftPower=leftPower*-1;
+            }
             int rightPower = random.nextInt(maxSpeed + 1);
+            if(random.nextBoolean()){
+                leftPower=rightPower*-1;
+            }
             int time = random.nextInt(maxTime) ;
             c.sendMessage(String.format("speed %1$s %2$s", leftPower, rightPower));
             Thread.sleep(time);
             c.sendMessage("speed 0 0");
+            Thread.sleep(100);
             Location dest = getLocation();
             trials.add(new TrialData(original, dest.getX(), dest.getY(), leftPower, rightPower, time));
         }
@@ -43,6 +51,7 @@ public class RandomRunner {
     }
 
     private void goToCenter() {
+        
 
     }
 

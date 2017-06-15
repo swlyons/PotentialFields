@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -42,7 +43,6 @@ public class RandomRunner {
             c.sendMessage(String.format("speed %1$s %2$s", leftPower, rightPower));
             Thread.sleep(time);
             c.sendMessage("speed 0 0");
-            Thread.sleep(100);
             Location dest = getLocation();
             trials.add(new TrialData(original, dest.getX(), dest.getY(), leftPower, rightPower, time));
         }
@@ -51,7 +51,10 @@ public class RandomRunner {
     }
 
     private void goToCenter() {
-        
+        List<PotentialField> fields = new ArrayList<PotentialField>();
+        fields.add(new AttractionField(930, 430));
+        PathTransversal traverser = new PathTransversal(c);
+        traverser.transversePath(fields);
 
     }
 

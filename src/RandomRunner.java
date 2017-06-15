@@ -43,6 +43,7 @@ public class RandomRunner {
             c.sendMessage(String.format("speed %1$s %2$s", leftPower, rightPower));
             Thread.sleep(time);
             c.sendMessage("speed 0 0");
+            Thread.sleep(800);
             Location dest = getLocation();
             trials.add(new TrialData(original, dest.getX(), dest.getY(), leftPower, rightPower, time));
         }

@@ -36,7 +36,7 @@ public class RandomRunner {
             goToCenter();
             Location original = getLocation();
 
-            int turn = random.nextInt(maxSpeed+1);
+            int turn = random.nextInt(maxSpeed);
             if(random.nextBoolean()){
                 turn=turn*-1;
             }
@@ -59,12 +59,12 @@ public class RandomRunner {
                 rightPower = maxSpeed - turn;
             }
 
-            int time = maxTime;
-//            int time = random.nextInt(maxTime) ;
+//            int time = maxTime;
+            int time = random.nextInt(maxTime) ;
             c.sendMessage(String.format("speed %1$s %2$s", leftPower, rightPower));
 //            System.out.println("time"+time);
             Thread.sleep(time);
-            c.sendMessage("speed 0 0");
+            c.sendMessage("power 0 0");
             Location dest = getLocation();
             trials.add(new TrialData(original, dest.getX(), dest.getY(), turn, time));
         }
@@ -80,7 +80,7 @@ public class RandomRunner {
 
     private void goToCenter() {
         List<PotentialField> fields = new ArrayList<PotentialField>();
-        fields.add(new AttractionField(930, 430));
+        fields.add(new AttractionField(930, 450));
         PathTransversal traverser = new PathTransversal(c);
         traverser.transversePath(fields);
 
@@ -88,10 +88,10 @@ public class RandomRunner {
 
     public Location getLocation() throws Exception{
         Location robotLocOld = c.getRobotPosition();
-        Location robotLocCurrent = c.getRobotPosition();
+        Location robotLocCurrent = robotLocOld;
         do{
             robotLocOld=robotLocCurrent;
-            Thread.sleep(250);
+            Thread.sleep(750);
             robotLocCurrent = c.getRobotPosition();
         }while(Math.abs(robotLocOld.getX()-robotLocCurrent.getX())>5&&Math.abs(robotLocOld.getY()-robotLocCurrent.getY())>5);
         return robotLocCurrent;

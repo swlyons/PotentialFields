@@ -23,14 +23,14 @@ public class PathTransversal {
     public void transversePath(List<PotentialField> destinations) {
         Location robotLoc = getRobotLocation();
         for (PotentialField destination: destinations) {
-            while (Math.abs(robotLoc.getX()-destination.getX()) > 100 ||
+            while (Math.abs(robotLoc.getX()-destination.getX()) > 200 ||
                     Math.abs(robotLoc.getY()-destination.getY()) > 100) {
                 robotLoc = getRobotLocation();
                 double angle = (Math.toDegrees(Math.atan2(destination.getY() - robotLoc.getY(), destination.getX() - robotLoc.getX())) + 360) % 360;
                 double robotAngle = (Math.toDegrees(robotLoc.getAngle()) + 360) % 360;
                 double motionAngle = (robotAngle - angle + 360) % 360;
-                int rightMotor = 5;
-                int leftMotor = 5;
+                int rightMotor = 9;
+                int leftMotor = 9;
                 if(motionAngle > 180) {
                     leftMotor = (int)(leftMotor * ((motionAngle - 180)/180 - .5) * 2);
                 } else {

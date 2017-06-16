@@ -1,9 +1,8 @@
 import com.google.gson.Gson;
 
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.*;
 import java.io.*;
-import java.net.Socket;
 
 public class Main {
 
@@ -65,10 +64,39 @@ public class Main {
             String hostName2="localhost";
             int portNumber2=5000;
 
-            Communicator c2 = new Communicator(hostName2, portNumber2);
-            String whereToGo = c2.sendMessage(result);
+            URL url = new URL(hostName2+":"+portNumber2);
+            HttpURLConnection connection = null;
+            connection = (HttpURLConnection) url.openConnection();
+
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Content-Language", "en-US");
+
+            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+            writer.write(result);
+            writer.close();
+
+            if (connection.getResponseCode() == 401) {}
+
+            InputStream is = connection.getInputStream();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+
+            String line="";
+            StringBuilder response=new StringBuilder();
+            while ((line = rd.readLine()) != null) {
+                response.append(line);
+            }
+
+            rd.close();
+
             Gson gson = new Gson();
-            TrialData trialWhatToDo = gson.fromJson(whereToGo, TrialData.class);
+            TrialData trialWhatToDo = gson.fromJson(response.toString(), TrialData.class);
+
+
+
+
             int leftPower=maxspeed;
             int rightPower=maxspeed;
             if(trialWhatToDo.getTurn()<0){

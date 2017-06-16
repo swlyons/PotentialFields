@@ -59,8 +59,8 @@ public class RandomRunner {
                 rightPower = maxSpeed - turn;
             }
 
-//            int time = maxTime;
-            int time = random.nextInt(maxTime) ;
+            int time = maxTime;
+//            int time = random.nextInt(maxTime) ;
             c.sendMessage(String.format("speed %1$s %2$s", leftPower, rightPower));
 //            System.out.println("time"+time);
             Thread.sleep(time);

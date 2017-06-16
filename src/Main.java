@@ -36,47 +36,47 @@ public class Main {
 
             Communicator c = new Communicator(hostName, portNumber);
             int maxspeed=5;
-            RandomRunner r = new RandomRunner(maxspeed, 5000, 100, "trials/trial"+(new Date()).getTime()+".json", c);
+            RandomRunner r = new RandomRunner(maxspeed, 3000, 50, "trials/trial"+(new Date()).getTime()+".json", c);
             r.run();
 
 
+///////////////////////////////////
+//            int goalX=0;
+//            int goalY=0;
+//            FieldLocations f = c.getFields();
+//            for (Map.Entry<Integer, Location> entry : f.getFields().entrySet()) {
+//                if (entry.getKey() == 27) {
+//                    goalX = (int) entry.getValue().getX();
+//                    goalY = (int) entry.getValue().getY();
+//                break;
+//                }
+//            }
+//
+//            Location robotLoc = c.getRobotPosition();
+//            TrialData t = new TrialData(robotLoc, goalX, goalY, 0, 0);
+//            String result = new Gson().toJson(t);
+//
+//            String hostName2="";
+//            int portNumber2=0;
+//
+//            Communicator c2 = new Communicator(hostName2, portNumber2);
+//            String whereToGo = c2.sendMessage(result);
+//            Gson gson = new Gson();
+//            TrialData trialWhatToDo = gson.fromJson(whereToGo, TrialData.class);
+//            int leftPower=maxspeed;
+//            int rightPower=maxspeed;
+//            if(trialWhatToDo.getTurn()<0){
+//                leftPower = maxspeed + trialWhatToDo.getTurn();
+//            }else{
+//                rightPower = maxspeed - trialWhatToDo.getTurn();
+//            }
+//            c.sendMessage(String.format("speed %1$s %2$s", leftPower, rightPower));
+//            Thread.sleep(trialWhatToDo.getTime());
+//            c.sendMessage("speed 0 0");
+///////////////////////////////////////////////
 
-            int goalX=0;
-            int goalY=0;
-            FieldLocations f = c.getFields();
-            for (Map.Entry<Integer, Location> entry : f.getFields().entrySet()) {
-                if (entry.getKey() == 27) {
-                    goalX = (int) entry.getValue().getX();
-                    goalY = (int) entry.getValue().getY();
-                break;
-                }
-            }
 
-            Location robotLoc = c.getRobotPosition();
-            TrialData t = new TrialData(robotLoc, goalX, goalY, 0, 0);
-            String result = new Gson().toJson(t);
-
-            String hostName2="";
-            int portNumber2=0;
-
-            Communicator c2 = new Communicator(hostName2, portNumber2);
-            String whereToGo = c2.sendMessage(result);
-            Gson gson = new Gson();
-            TrialData trialWhatToDo = gson.fromJson(whereToGo, TrialData.class);
-            int leftPower=maxspeed;
-            int rightPower=maxspeed;
-            if(trialWhatToDo.getTurn()<0){
-                leftPower = maxspeed + trialWhatToDo.getTurn();
-            }else{
-                rightPower = maxspeed - trialWhatToDo.getTurn();
-            }
-            c.sendMessage(String.format("speed %1$s %2$s", leftPower, rightPower));
-            Thread.sleep(trialWhatToDo.getTime());
-            c.sendMessage("speed 0 0");
-//                public TrialData(Location robotLoc, double destX, double destY, int leftPower, int rightPower, int time) {
-
-
-
+//            public TrialData(Location robotLoc, double destX, double destY, int leftPower, int rightPower, int time) {
 //            System.out.println(c.sendMessage("where others"));
 //            System.out.println(c.sendMessage("param kp 30"));
 //            System.out.println(c.sendMessage("param ki 0.2"));

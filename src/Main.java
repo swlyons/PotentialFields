@@ -37,76 +37,83 @@ public class Main {
             System.out.println(c.sendMessage("param kp 30"));
             System.out.println(c.sendMessage("param ki 0.2"));
             int maxspeed=7;
-//            int trialNum = 2;
-//            while(true) {
-//                RandomRunner r = new RandomRunner(maxspeed, 3500, 10, "carpet/trialc-" + Integer.toString(trialNum) + ".json", c);
-//                r.run();
-//                trialNum ++;
+            int trialNum = 1;
+            while(true) {
+                RandomRunner r = new RandomRunner(maxspeed, 3500, 10, "carpet/trial_demo-" + Integer.toString(trialNum) + ".json", c);
+                r.run();
+                trialNum ++;
+            }
+
+//            List<PotentialField> fields = new ArrayList<PotentialField>();
+//            fields.add(new AttractionField(930, 450));
+//            PathTransversal traverser = new PathTransversal(c);
+//            traverser.transversePath(fields);
+//            Thread.sleep(4000);
+/////////////////////////////////////
+//            int goalX=0;
+//            int goalY=0;
+//            FieldLocations f = c.getFields();
+//            for (Map.Entry<Integer, Location> entry : f.getFields().entrySet()) {
+//                if (entry.getKey() == 27) {
+//                    goalX = (int) entry.getValue().getX();
+//                    goalY = (int) entry.getValue().getY();
+//                break;
+//                }
 //            }
-
-
-///////////////////////////////////
-            int goalX=0;
-            int goalY=0;
-            FieldLocations f = c.getFields();
-            for (Map.Entry<Integer, Location> entry : f.getFields().entrySet()) {
-                if (entry.getKey() == 27) {
-                    goalX = (int) entry.getValue().getX();
-                    goalY = (int) entry.getValue().getY();
-                break;
-                }
-            }
-
-            Location robotLoc = c.getRobotPosition();
-            TrialData t = new TrialData(robotLoc, goalX, goalY, 0, 0);
-            String result = new Gson().toJson(t);
-
-            String hostName2="localhost";
-            int portNumber2=5000;
-
-            URL url = new URL(hostName2+":"+portNumber2);
-            HttpURLConnection connection = null;
-            connection = (HttpURLConnection) url.openConnection();
-
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Content-Language", "en-US");
-
-            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-            writer.write(result);
-            writer.close();
-
-            if (connection.getResponseCode() == 401) {}
-
-            InputStream is = connection.getInputStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-
-            String line="";
-            StringBuilder response=new StringBuilder();
-            while ((line = rd.readLine()) != null) {
-                response.append(line);
-            }
-
-            rd.close();
-
-            Gson gson = new Gson();
-            TrialData trialWhatToDo = gson.fromJson(response.toString(), TrialData.class);
-
-
-
-
-            int leftPower=maxspeed;
-            int rightPower=maxspeed;
-            if(trialWhatToDo.getTurn()<0){
-                leftPower = maxspeed + trialWhatToDo.getTurn();
-            }else{
-                rightPower = maxspeed - trialWhatToDo.getTurn();
-            }
-            c.sendMessage(String.format("speed %1$s %2$s", leftPower, rightPower));
-            Thread.sleep(trialWhatToDo.getTime());
-            c.sendMessage("speed 0 0");
+//
+//            Location robotLoc = c.getRobotPosition();
+//            TrialData t = new TrialData(robotLoc, goalX, goalY, 0, 0);
+//            String result = new Gson().toJson(t);
+//
+//            String hostName2="http://localhost";
+//            int portNumber2=5000;
+//
+//            URL url = new URL(hostName2+":"+portNumber2 + "/predict");
+//            HttpURLConnection connection = null;
+//            connection = (HttpURLConnection) url.openConnection();
+//
+//            connection.setDoOutput(true);
+//            connection.setRequestMethod("POST");
+//            connection.setRequestProperty("Content-Type", "application/json");
+//            connection.setRequestProperty("Accept", "application/json");
+//            connection.setRequestProperty("Content-Language", "en-US");
+//
+//            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+//            writer.write(result);
+//            writer.close();
+//
+//            if (connection.getResponseCode() == 401) {}
+//
+//            InputStream is = connection.getInputStream();
+//            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+//
+//            String line="";
+//            StringBuilder response=new StringBuilder();
+//            while ((line = rd.readLine()) != null) {
+//                response.append(line);
+//            }
+//
+//            rd.close();
+//            System.out.println(response.toString());
+//            Gson gson = new Gson();
+//            ArrayList<Double> res = gson.fromJson(response.toString(), ArrayList.class);
+//            int turn = res.get(0).intValue();
+//            int sleepTime = res.get(1).intValue();
+//
+//
+//
+//
+//            int leftPower=maxspeed;
+//            int rightPower=maxspeed;
+//            if(turn<0){
+//                leftPower = maxspeed + turn;
+//            }else{
+//                rightPower = maxspeed - turn;
+//            }
+//            System.out.println(String.format("%1$s %2$s", leftPower, rightPower));
+//            c.sendMessage(String.format("speed %1$s %2$s", leftPower, rightPower));
+//            Thread.sleep(sleepTime);
+//            c.sendMessage("speed 0 0");
 ///////////////////////////////////////////////
 
 
